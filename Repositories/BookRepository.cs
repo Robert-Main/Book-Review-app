@@ -37,5 +37,38 @@ namespace BookReview.Repositories
             if (reviews.Count == 0)                return 0;
             return reviews.Average(r => r.Rating);
         }
+
+
+        public async Task<bool> BookExistsAsync(int id)
+        {
+            return await Task.FromResult(_context.Books.Any(b => b.Id == id));
+        }
+
+        public async Task<bool> CreateBookAsync(Book book)
+        {
+            _context.Books.Add(book);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> UpdateBookAsync(Book book)
+        {
+            var existingBook = await GetBookAsync(book.Id);
+            if (existingBook == null) return false;
+
+            _context.Books.Update(book);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> DeleteBookAsync(int id)
+        {
+            var book = await GetBookAsync(id);
+            if (book == null) return false;
+
+            _context.Books.Remove(book);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

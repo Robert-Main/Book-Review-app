@@ -20,6 +20,8 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IBook, BookRepository>();
+builder.Services.AddScoped<ICategoryInterface, CategoryRepository>();
+builder.Services.AddScoped<ICountryInterface, CountryRepository>();
 
 var app = builder.Build();
 

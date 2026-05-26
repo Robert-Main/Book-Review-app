@@ -161,3 +161,4 @@ C:\Users\hp\Documents\work\mine\ASP.net\donet-api\FirstAPI\BookReview\obj\Debug\
 C:\Users\hp\Documents\work\mine\ASP.net\donet-api\FirstAPI\BookReview\obj\Debug\net10.0\FirstAPI.pdb
 C:\Users\hp\Documents\work\mine\ASP.net\donet-api\FirstAPI\BookReview\obj\Debug\net10.0\FirstAPI.genruntimeconfig.cache
 C:\Users\hp\Documents\work\mine\ASP.net\donet-api\FirstAPI\BookReview\obj\Debug\net10.0\ref\FirstAPI.dll
+C:\Users\hp\Documents\work\mine\ASP.net\donet-api\FirstAPI\BookReview\obj\Debug\net10.0\FirstAPI.sourcelink.json

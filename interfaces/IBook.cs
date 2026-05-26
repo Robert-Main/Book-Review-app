@@ -13,5 +13,10 @@ namespace BookReview.interfaces
         Task<Book> GetBookByTitle(string title);
         Task<double> GetBookRatingAsync(int id);
 
+        Task<bool> BookExistsAsync(int id);
+        Task<bool> CreateBookAsync(Book book);
+        Task<bool> UpdateBookAsync(Book book);
+        Task<bool> DeleteBookAsync(int id);
+
     }
 }

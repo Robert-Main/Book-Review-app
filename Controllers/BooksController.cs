@@ -88,5 +88,93 @@ namespace BookReview.Controllers
                 data = book
             });
         }
+
+        [HttpGet("{id}/rating")]
+        [ProducesResponseType(200, Type = typeof(decimal))]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> GetBookRating(int id)
+        {
+            var rating = await _bookRepository.GetBookRatingAsync(id);
+            if (!ModelState.IsValid)
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "Invalid model state"
+                });
+            return Ok(new
+            {
+                success = true,
+                message = "Book rating retrieved successfully",
+                data = rating
+            });
+        }
+
+        [HttpPost]
+        [ProducesResponseType(201, Type = typeof(Book))]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> CreateBook([FromBody] Book book)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "Invalid model state"
+                });
+
+            var created = await _bookRepository.CreateBookAsync(book);
+            if (!created)
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "Failed to create book"
+                });
+
+            return CreatedAtAction(nameof(GetBook), new { id = book.Id }, book);
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> UpdateBook(int id, [FromBody] Book book)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "Invalid model state"
+                });
+
+            if (id != book.Id)
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "ID mismatch"
+                });
+
+            var updated = await _bookRepository.UpdateBookAsync(book);
+            if (!updated)
+                return NotFound(new
+                {
+                    success = false,
+                    message = "Book not found"
+                });
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        public async Task<IActionResult> DeleteBook(int id)
+        {
+            var deleted = await _bookRepository.DeleteBookAsync(id);
+            if (!deleted)
+                return NotFound(new
+                {
+                    success = false,
+                    message = "Book not found"
+                });
+
+            return NoContent();
+        }
     }
 }
