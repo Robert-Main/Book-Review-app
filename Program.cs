@@ -22,6 +22,9 @@ builder.Services.AddDbContext<DataContext>(options =>
 builder.Services.AddScoped<IBook, BookRepository>();
 builder.Services.AddScoped<ICategoryInterface, CategoryRepository>();
 builder.Services.AddScoped<ICountryInterface, CountryRepository>();
+builder.Services.AddScoped<IAuthorInterface, AuthorRepository>();
+builder.Services.AddScoped<IReviewInterface, ReviewRepository>();
+builder.Services.AddScoped<IReviewerInterface, ReviewerRepository>();
 
 var app = builder.Build();
 

@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using BookReview.Dtos;
 using BookReview.interfaces;
+using BookReview.Mappers;
 using BookReview.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,16 +20,13 @@ namespace BookReview.Controllers
         public async Task<ActionResult<ICollection<Category>>> GetCategories()
         {
             var categories = await _categoryRepository.GetCategoriesAsync();
+            var categoriesDto = categories.Select(c => c.MapToDto()).ToList();
             return Ok(new
             {
                 success = true,
                 message = "Categories retrieved successfully",
                 data = new {
-                    categories = categories.Select(c => new CategoryDtos
-                    {
-                        Id = c.Id,
-                        Name = c.Name
-                    }).ToList()
+                    categories = categoriesDto
                 }
             });
         }
@@ -47,16 +41,13 @@ namespace BookReview.Controllers
                     success = false,
                     message = "Category not found"
                 });
+            var categoryDto = category.MapToDto();
             return Ok(new
             {
                 success = true,
                 message = "Category retrieved successfully",
                 data = new {
-                    category = new CategoryDtos
-                    {
-                        Id = category.Id,
-                        Name = category.Name
-                    }
+                    category = categoryDto
                 }
             });
         }

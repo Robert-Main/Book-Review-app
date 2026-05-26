@@ -1,5 +1,7 @@
 
+using BookReview.Dtos;
 using BookReview.interfaces;
+using BookReview.Mappers;
 using BookReview.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +23,7 @@ namespace BookReview.Controllers
         public async Task<IActionResult> GetBooks()
         {
             var books = await _bookRepository.GetBooksAsync();
+            var booksDto = books.Select(b => b.MapToDto()).ToList();
             if (!ModelState.IsValid)
                 return BadRequest(new
                 {
@@ -31,7 +34,7 @@ namespace BookReview.Controllers
             {
                 success = true,
                 message = "Books retrieved successfully",
-                data = books
+                data = booksDto
             });
         }
 
@@ -41,6 +44,7 @@ namespace BookReview.Controllers
         public async Task<IActionResult> GetBook(int id)
         {
             var book = await _bookRepository.GetBookAsync(id);
+            var bookDto = book.MapToDto();
             if (!ModelState.IsValid)
                 return BadRequest(new
                 {
@@ -58,7 +62,7 @@ namespace BookReview.Controllers
             {
                 success = true,
                 message = "Book retrieved successfully",
-                data = book
+                data = bookDto
             });
         }
 
@@ -68,6 +72,7 @@ namespace BookReview.Controllers
         public async Task<IActionResult> GetBookByTitle(string title)
         {
             var book = await _bookRepository.GetBookByTitle(title);
+            var bookDto = book.MapToDto();
             if (!ModelState.IsValid)
                 return BadRequest(new
                 {
@@ -85,7 +90,7 @@ namespace BookReview.Controllers
             {
                 success = true,
                 message = "Book retrieved successfully",
-                data = book
+                data = bookDto
             });
         }
 

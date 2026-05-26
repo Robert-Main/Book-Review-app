@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BookReview.Data;
 using BookReview.interfaces;
 using BookReview.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookReview.Repositories
 {
@@ -18,17 +19,39 @@ namespace BookReview.Repositories
         }
         public async Task<ICollection<Book>> GetBooksAsync()
         {
-            return await Task.FromResult(_context.Books.OrderBy(b => b.Id).ToList());
+            return await _context.Books
+                .Include(b => b.Reviews)
+                .Include(b => b.BookAuthors)
+                    .ThenInclude(ba => ba.Author)
+                        .ThenInclude(a => a.Country)
+                .Include(b => b.BookCategories)
+                    .ThenInclude(bc => bc.Category)
+                .OrderBy(b => b.Id)
+                .ToListAsync();
         }
 
         public async Task<Book> GetBookAsync(int id)
         {
-            return await Task.FromResult(_context.Books.FirstOrDefault(b => b.Id == id));
+            return await _context.Books
+                .Include(b => b.Reviews)
+                .Include(b => b.BookAuthors)
+                    .ThenInclude(ba => ba.Author)
+                        .ThenInclude(a => a.Country)
+                .Include(b => b.BookCategories)
+                    .ThenInclude(bc => bc.Category)
+                .FirstOrDefaultAsync(b => b.Id == id);
         }
 
         public async Task<Book> GetBookByTitle(string title)
         {
-            return await Task.FromResult(_context.Books.FirstOrDefault(b => b.Title.ToLower() == title.ToLower()));
+            return await _context.Books
+                .Include(b => b.Reviews)
+                .Include(b => b.BookAuthors)
+                    .ThenInclude(ba => ba.Author)
+                        .ThenInclude(a => a.Country)
+                .Include(b => b.BookCategories)
+                    .ThenInclude(bc => bc.Category)
+                .FirstOrDefaultAsync(b => b.Title.ToLower() == title.ToLower());
         }
 
         public async Task<double> GetBookRatingAsync(int id)

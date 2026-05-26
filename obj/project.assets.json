@@ -3639,11 +3639,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\hp\\Documents\\work\\mine\\ASP.net\\donet-api\\FirstAPI\\BookReview\\FirstAPI.csproj",
+      "projectUniqueName": "C:\\Users\\hp\\Documents\\work\\mine\\ASP.net\\donet-api\\FirstAPI\\BookReview\\FirstAPI.csproj",
       "projectName": "FirstAPI",
-      "projectPath": "c:\\Users\\hp\\Documents\\work\\mine\\ASP.net\\donet-api\\FirstAPI\\BookReview\\FirstAPI.csproj",
+      "projectPath": "C:\\Users\\hp\\Documents\\work\\mine\\ASP.net\\donet-api\\FirstAPI\\BookReview\\FirstAPI.csproj",
       "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\hp\\Documents\\work\\mine\\ASP.net\\donet-api\\FirstAPI\\BookReview\\obj\\",
+      "outputPath": "C:\\Users\\hp\\Documents\\work\\mine\\ASP.net\\donet-api\\FirstAPI\\BookReview\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config"

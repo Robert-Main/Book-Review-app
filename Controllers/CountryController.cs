@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using BookReview.Dtos;
 using BookReview.interfaces;
+using BookReview.Mappers;
 using BookReview.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,17 +21,14 @@ namespace BookReview.Controllers
         public async Task<ActionResult> GetCountries()
         {
             var countries = await _countryRepository.GetCountriesAsync();
+            var countriesDto = countries.Select(c => c.MapToDto()).ToList();
             return Ok(new
             {
                 success = true,
                 message = "Countries retrieved successfully",
                 data = new
                 {
-                    countries = countries.Select(c => new CountryDtos
-                    {
-                        Id = c.Id,
-                        Name = c.Name
-                    }).ToList()
+                    countries = countriesDto
                 }
             });
         }
@@ -54,15 +48,12 @@ namespace BookReview.Controllers
                 });
             }
 
+            var countryDto = country.MapToDto();
             return Ok(new
             {
                 success = true,
                 message = "Country retrieved successfully",
-                data = new CountryDtos
-                {
-                    Id = country.Id,
-                    Name = country.Name
-                }
+                data = countryDto
             });
         }
 
@@ -71,10 +62,7 @@ namespace BookReview.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> CreateCountry(CountryDtos countryDto)
         {
-            var country = new Country
-            {
-                Name = countryDto.Name
-            };
+            var country = countryDto.MapToEntity();
 
             var result = await _countryRepository.CreateCountryAsync(country);
             if (!result)
