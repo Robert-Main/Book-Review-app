@@ -32,7 +32,7 @@ namespace BookReview.Repositories
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<Reviewer> GetReviewerAsync(int id)
+        public async Task<Reviewer?> GetReviewerAsync(int id)
         {
             return await _context.Reviewers.FirstOrDefaultAsync(r => r.Id == id);
         }
@@ -44,7 +44,7 @@ namespace BookReview.Repositories
 
         public async Task<ICollection<Review>> GetReviewsByReviewerAsync(int reviewerId)
         {
-            return await _context.Reviews.Where(r => r.Reviewer.Id == reviewerId).ToListAsync();
+            return await _context.Reviews.Where(r => r.Reviewer != null && r.Reviewer.Id == reviewerId).ToListAsync();
         }
 
         public async Task<bool> ReviewerExistsAsync(int id)

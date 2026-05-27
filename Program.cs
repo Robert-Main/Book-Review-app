@@ -38,10 +38,10 @@ void SeedData(IHost app)
 {
     var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
 
-    using (var scope = scopedFactory.CreateScope())
+    using (var scope = scopedFactory?.CreateScope())
     {
-        var service = scope.ServiceProvider.GetService<Seed>();
-        service.SeedDataContext();
+        var service = scope?.ServiceProvider.GetService<Seed>();
+        service?.SeedDataContext();
     }
 }
 

@@ -32,7 +32,7 @@ namespace BookReview.Repositories
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<Review> GetReviewAsync(int id)
+        public async Task<Review?> GetReviewAsync(int id)
         {
             return await _context.Reviews.FirstOrDefaultAsync(r => r.Id == id);
         }
@@ -44,7 +44,7 @@ namespace BookReview.Repositories
 
         public async Task<ICollection<Review>> GetReviewsOfABookAsync(int bookId)
         {
-            return await _context.Reviews.Where(r => r.Book.Id == bookId).ToListAsync();
+            return await _context.Reviews.Where(r => r.Book != null && r.Book.Id == bookId).ToListAsync();
         }
 
         public async Task<bool> ReviewExistsAsync(int id)

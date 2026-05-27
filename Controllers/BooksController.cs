@@ -45,6 +45,14 @@ namespace BookReview.Controllers
         public async Task<IActionResult> GetBook(int id)
         {
             var book = await _bookRepository.GetBookAsync(id);
+
+            if (book == null)
+                return NotFound(new
+                {
+                    success = false,
+                    message = "Book not found"
+                });
+
             var bookDto = BookMappers.MapToBookResponseDto(book);
             if (!ModelState.IsValid)
                 return BadRequest(new
@@ -53,12 +61,6 @@ namespace BookReview.Controllers
                     message = "Invalid model state"
                 });
 
-            if (book == null)
-                return NotFound(new
-                {
-                    success = false,
-                    message = "Book not found"
-                });
             return Ok(new
             {
                 success = true,
@@ -73,6 +75,14 @@ namespace BookReview.Controllers
         public async Task<IActionResult> GetBookByTitle(string title)
         {
             var book = await _bookRepository.GetBookByTitle(title);
+
+            if (book == null)
+                return NotFound(new
+                {
+                    success = false,
+                    message = "Book not found"
+                });
+
             var bookDto = BookMappers.MapToBookResponseDto(book);
             if (!ModelState.IsValid)
                 return BadRequest(new
@@ -81,12 +91,6 @@ namespace BookReview.Controllers
                     message = "Invalid model state"
                 });
 
-            if (book == null)
-                return NotFound(new
-                {
-                    success = false,
-                    message = "Book not found"
-                });
             return Ok(new
             {
                 success = true,

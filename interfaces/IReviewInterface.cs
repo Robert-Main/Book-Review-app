@@ -9,7 +9,7 @@ namespace BookReview.interfaces
     public interface IReviewInterface
     {
         Task<ICollection<Review>> GetReviewsAsync();
-        Task<Review> GetReviewAsync(int id);
+        Task<Review?> GetReviewAsync(int id);
         Task<ICollection<Review>> GetReviewsOfABookAsync(int bookId);
         Task<bool> ReviewExistsAsync(int id);
         Task<bool> CreateReviewAsync(Review review);

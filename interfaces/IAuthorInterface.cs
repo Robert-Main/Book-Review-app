@@ -9,7 +9,7 @@ namespace BookReview.interfaces
     public interface IAuthorInterface
     {
         Task<ICollection<Author>> GetAuthorsAsync();
-        Task<Author> GetAuthorAsync(int id);
+        Task<Author?> GetAuthorAsync(int id);
         Task<ICollection<Author>> GetAuthorsOfABookAsync(int bookId);
         Task<ICollection<Book>> GetBooksByAuthorAsync(int authorId);
         Task<bool> AuthorExistsAsync(int id);

@@ -66,14 +66,14 @@ namespace BookReviewApp
             };
 
             // Many-to-many: link authors ↔ books
-            books[0].BookAuthors.Add(new BookAuthor { Book = books[0], Author = authors[0] });
-            books[1].BookAuthors.Add(new BookAuthor { Book = books[1], Author = authors[1] });
-            books[2].BookAuthors.Add(new BookAuthor { Book = books[2], Author = authors[2] });
+            books[0].BookAuthors?.Add(new BookAuthor { Book = books[0], Author = authors[0] });
+            books[1].BookAuthors?.Add(new BookAuthor { Book = books[1], Author = authors[1] });
+            books[2].BookAuthors?.Add(new BookAuthor { Book = books[2], Author = authors[2] });
 
             // Many-to-many: link categories ↔ books
-            books[0].BookCategories.Add(new BookCategory { Book = books[0], Category = categories[0] });
-            books[1].BookCategories.Add(new BookCategory { Book = books[1], Category = categories[1] });
-            books[2].BookCategories.Add(new BookCategory { Book = books[2], Category = categories[2] });
+            books[0].BookCategories?.Add(new BookCategory { Book = books[0], Category = categories[0] });
+            books[1].BookCategories?.Add(new BookCategory { Book = books[1], Category = categories[1] });
+            books[2].BookCategories?.Add(new BookCategory { Book = books[2], Category = categories[2] });
 
             var reviewers = new List<Reviewer>
             {

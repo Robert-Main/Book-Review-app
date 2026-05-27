@@ -21,24 +21,24 @@ namespace BookReview.Repositories
         public async Task<ICollection<Book>> GetBooksAsync(QueryObject query)
         {
             var books=_context.Books.Include(b => b.Reviews).Include(b => b.BookAuthors).ThenInclude(ba => ba.Author)
-                        .ThenInclude(a => a.Country)
+                        .ThenInclude(a => a!.Country)
                 .Include(b => b.BookCategories)
                     .ThenInclude(bc => bc.Category)
                 .AsQueryable();
 
                 if (!string.IsNullOrEmpty(query.Author))
                 {
-                    books = books.Where(b => b.BookAuthors != null && b.BookAuthors.Any(ba => ba.Author != null && ba.Author.Name != null && ba.Author.Name.ToLower().Contains(query.Author.ToLower())));
+                    books = books.Where(b => b.BookAuthors.Any(ba => ba.Author != null && ba.Author.Name != null && ba.Author.Name.ToLower().Contains(query.Author.ToLower())));
                 }
 
                 if (!string.IsNullOrEmpty(query.ReviewName))
                 {
-                    books = books.Where(b => b.Reviews != null && b.Reviews.Any(r => r.ReviewerName != null && r.ReviewerName.ToLower().Contains(query.ReviewName.ToLower())));
+                    books = books.Where(b => b.Reviews.Any(r => r.ReviewerName != null && r.ReviewerName.ToLower().Contains(query.ReviewName.ToLower())));
                 }
 
                 if (!string.IsNullOrEmpty(query.Category))
                 {
-                    books = books.Where(b => b.BookCategories != null && b.BookCategories.Any(bc => bc.Category != null && bc.Category.Name != null && bc.Category.Name.ToLower().Contains(query.Category.ToLower())));
+                    books = books.Where(b => b.BookCategories.Any(bc => bc.Category != null && bc.Category.Name != null && bc.Category.Name.ToLower().Contains(query.Category.ToLower())));
                 }
 
                 if (!string.IsNullOrEmpty(query.SortBy))
@@ -60,11 +60,11 @@ namespace BookReview.Repositories
         public async Task<Book?> GetBookAsync(int id)
         {
             return await _context.Books
-                .Include(b => b.Reviews)!
-                .Include(b => b.BookAuthors)!
-                    .ThenInclude(ba => ba.Author)!
+                .Include(b => b.Reviews)
+                .Include(b => b.BookAuthors)
+                    .ThenInclude(ba => ba.Author)
                         .ThenInclude(a => a!.Country)
-                .Include(b => b.BookCategories)!
+                .Include(b => b.BookCategories)
                     .ThenInclude(bc => bc.Category)
                 .FirstOrDefaultAsync(b => b.Id == id);
         }
@@ -72,18 +72,18 @@ namespace BookReview.Repositories
         public async Task<Book?> GetBookByTitle(string title)
         {
             return await _context.Books
-                .Include(b => b.Reviews)!
-                .Include(b => b.BookAuthors)!
-                    .ThenInclude(ba => ba.Author)!
+                .Include(b => b.Reviews)
+                .Include(b => b.BookAuthors)
+                    .ThenInclude(ba => ba.Author)
                         .ThenInclude(a => a!.Country)
-                .Include(b => b.BookCategories)!
+                .Include(b => b.BookCategories)
                     .ThenInclude(bc => bc.Category)
                 .FirstOrDefaultAsync(b => b.Title != null && b.Title.ToLower() == title.ToLower());
         }
 
         public async Task<double> GetBookRatingAsync(int id)
         {
-            var reviews = _context.Reviews.Where(r => r.Book.Id == id).ToList();
+            var reviews = _context.Reviews.Where(r => r.Book != null && r.Book.Id == id).ToList();
             if (reviews.Count == 0)                return 0;
             return reviews.Average(r => r.Rating);
         }

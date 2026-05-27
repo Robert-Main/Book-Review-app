@@ -43,6 +43,9 @@ namespace BookReview.Controllers
                 return NotFound();
 
             var review = await _reviewRepository.GetReviewAsync(id);
+            if (review == null)
+                return NotFound();
+
             var reviewDto = ReviewMappers.MapToDto(review);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

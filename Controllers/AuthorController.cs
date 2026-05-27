@@ -43,6 +43,9 @@ namespace BookReview.Controllers
                 return NotFound(new { success = false, message = "Author not found" });
 
             var author = await _authorRepository.GetAuthorAsync(id);
+            if (author == null)
+                return NotFound(new { success = false, message = "Author not found" });
+
             var authorDto = AuthorMappers.MapToDto(author);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

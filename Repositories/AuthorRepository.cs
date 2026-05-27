@@ -37,7 +37,7 @@ namespace BookReview.Repositories
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<Author> GetAuthorAsync(int id)
+        public async Task<Author?> GetAuthorAsync(int id)
         {
             return await _context.Authors.FirstOrDefaultAsync(a => a.Id == id);
         }
@@ -49,12 +49,12 @@ namespace BookReview.Repositories
 
         public async Task<ICollection<Author>> GetAuthorsOfABookAsync(int bookId)
         {
-            return await _context.BookAuthors.Where(ba => ba.BookId == bookId).Select(a => a.Author).ToListAsync();
+            return await _context.BookAuthors.Where(ba => ba.BookId == bookId).Select(a => a.Author!).ToListAsync();
         }
 
         public async Task<ICollection<Book>> GetBooksByAuthorAsync(int authorId)
         {
-            return await _context.BookAuthors.Where(ba => ba.AuthorId == authorId).Select(b => b.Book).ToListAsync();
+            return await _context.BookAuthors.Where(ba => ba.AuthorId == authorId).Select(b => b.Book!).ToListAsync();
         }
 
         public async Task<bool> UpdateAuthorAsync(Author author)
