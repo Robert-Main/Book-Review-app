@@ -20,7 +20,7 @@ namespace BookReview.Controllers
         public async Task<ActionResult<ICollection<Category>>> GetCategories()
         {
             var categories = await _categoryRepository.GetCategoriesAsync();
-            var categoriesDto = categories.Select(c => c.MapToDto()).ToList();
+            var categoriesDto = categories.Select(c => CategoryMappers.MapToDto(c)).ToList();
             return Ok(new
             {
                 success = true,
@@ -41,7 +41,7 @@ namespace BookReview.Controllers
                     success = false,
                     message = "Category not found"
                 });
-            var categoryDto = category.MapToDto();
+            var categoryDto = CategoryMappers.MapToDto(category);
             return Ok(new
             {
                 success = true,

@@ -22,7 +22,7 @@ namespace BookReview.Controllers
         public async Task<IActionResult> GetAuthors()
         {
             var authors = await _authorRepository.GetAuthorsAsync();
-            var authorsDto = authors.Select(a => a.MapToDto()).ToList();
+            var authorsDto = authors.Select(a => AuthorMappers.MapToDto(a)).ToList();
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
@@ -43,7 +43,7 @@ namespace BookReview.Controllers
                 return NotFound(new { success = false, message = "Author not found" });
 
             var author = await _authorRepository.GetAuthorAsync(id);
-            var authorDto = author.MapToDto();
+            var authorDto = AuthorMappers.MapToDto(author);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
@@ -60,7 +60,7 @@ namespace BookReview.Controllers
         public async Task<IActionResult> GetAuthorsOfABook(int bookId)
         {
             var authors = await _authorRepository.GetAuthorsOfABookAsync(bookId);
-            var authorsDto = authors.Select(a => a.MapToDto()).ToList();
+            var authorsDto = authors.Select(a => AuthorMappers.MapToDto(a)).ToList();
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
@@ -80,7 +80,7 @@ namespace BookReview.Controllers
                 return NotFound(new { success = false, message = "Author not found" });
 
             var books = await _authorRepository.GetBooksByAuthorAsync(authorId);
-            var booksDto = books.Select(b => b.MapToDto()).ToList();
+            var booksDto = books.Select(b => BookMappers.MapToBookResponseDto(b)).ToList();
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 

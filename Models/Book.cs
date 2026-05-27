@@ -10,8 +10,8 @@ namespace BookReview.Models
         public int Id { get; set; }
         public string? Title { get; set; }
         public DateTime ReleaseDate { get; set; }
-        public ICollection<Review>? Reviews { get; set; }
-        public ICollection<BookAuthor>? BookAuthors { get; set; }
-        public ICollection<BookCategory>? BookCategories { get; set; }
+        public ICollection<Review>? Reviews { get; set; }= new List<Review>();
+        public ICollection<BookAuthor>? BookAuthors { get; set; }= new List<BookAuthor>();
+        public ICollection<BookCategory>? BookCategories { get; set; }= new List<BookCategory>();
     }
 }

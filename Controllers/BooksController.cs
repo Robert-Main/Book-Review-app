@@ -1,5 +1,6 @@
 
 using BookReview.Dtos;
+using BookReview.Helper;
 using BookReview.interfaces;
 using BookReview.Mappers;
 using BookReview.Models;
@@ -20,10 +21,10 @@ namespace BookReview.Controllers
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Book>))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> GetBooks()
+        public async Task<IActionResult> GetBooks([FromQuery] QueryObject query)
         {
-            var books = await _bookRepository.GetBooksAsync();
-            var booksDto = books.Select(b => b.MapToDto()).ToList();
+            var books = await _bookRepository.GetBooksAsync(query);
+            var booksDto = books.Select(b => BookMappers.MapToBookResponseDto(b)).ToList();
             if (!ModelState.IsValid)
                 return BadRequest(new
                 {
@@ -44,7 +45,7 @@ namespace BookReview.Controllers
         public async Task<IActionResult> GetBook(int id)
         {
             var book = await _bookRepository.GetBookAsync(id);
-            var bookDto = book.MapToDto();
+            var bookDto = BookMappers.MapToBookResponseDto(book);
             if (!ModelState.IsValid)
                 return BadRequest(new
                 {
@@ -72,7 +73,7 @@ namespace BookReview.Controllers
         public async Task<IActionResult> GetBookByTitle(string title)
         {
             var book = await _bookRepository.GetBookByTitle(title);
-            var bookDto = book.MapToDto();
+            var bookDto = BookMappers.MapToBookResponseDto(book);
             if (!ModelState.IsValid)
                 return BadRequest(new
                 {

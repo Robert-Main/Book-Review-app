@@ -14,5 +14,6 @@ namespace BookReview.Dtos
         public List<AuthorDto>? Authors { get; set; }
         public List<CategoryDtos>? Categories { get; set; }
         public List<ReviewDto>? Reviews { get; set; }
+
     }
 }

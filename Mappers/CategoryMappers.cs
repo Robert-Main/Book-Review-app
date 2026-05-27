@@ -5,7 +5,7 @@ namespace BookReview.Mappers
 {
     public static class CategoryMappers
     {
-        public static CategoryDtos MapToDto(this Category category)
+        public static CategoryDtos MapToDto(Category category)
         {
             return new CategoryDtos
             {
@@ -13,5 +13,6 @@ namespace BookReview.Mappers
                 Name = category.Name
             };
         }
+        
     }
 }

@@ -5,7 +5,7 @@ namespace BookReview.Mappers
 {
     public static class CountryMappers
     {
-        public static CountryDtos MapToDto(this Country country)
+        public static CountryDtos MapToDto(Country country)
         {
             return new CountryDtos
             {
@@ -14,7 +14,7 @@ namespace BookReview.Mappers
             };
         }
 
-        public static Country MapToEntity(this CountryDtos countryDto)
+        public static Country MapToEntity(CountryDtos countryDto)
         {
             return new Country
             {

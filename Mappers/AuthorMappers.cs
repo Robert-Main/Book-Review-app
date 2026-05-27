@@ -5,14 +5,23 @@ namespace BookReview.Mappers
 {
     public static class AuthorMappers
     {
-        public static AuthorDto MapToDto(this Author author)
+        public static AuthorDto MapToDto(Author author)
         {
             return new AuthorDto
             {
                 Id = author.Id,
                 Name = author.Name,
                 Bio = author.Bio,
-                Country = author.Country?.MapToDto()
+                Country = author.Country != null ? CountryMappers.MapToDto(author.Country) : null
+            };
+        }
+
+        public static Author MapToEntity(AuthorDto authorDto)
+        {
+            return new Author
+            {
+                Name = authorDto.Name,
+                Bio = authorDto.Bio,
             };
         }
     }

@@ -21,7 +21,7 @@ namespace BookReview.Controllers
         public async Task<ActionResult> GetCountries()
         {
             var countries = await _countryRepository.GetCountriesAsync();
-            var countriesDto = countries.Select(c => c.MapToDto()).ToList();
+            var countriesDto = countries.Select(c => CountryMappers.MapToDto(c)).ToList();
             return Ok(new
             {
                 success = true,
@@ -48,7 +48,7 @@ namespace BookReview.Controllers
                 });
             }
 
-            var countryDto = country.MapToDto();
+            var countryDto = CountryMappers.MapToDto(country);
             return Ok(new
             {
                 success = true,
@@ -62,7 +62,7 @@ namespace BookReview.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> CreateCountry(CountryDtos countryDto)
         {
-            var country = countryDto.MapToEntity();
+            var country = CountryMappers.MapToEntity(countryDto);
 
             var result = await _countryRepository.CreateCountryAsync(country);
             if (!result)

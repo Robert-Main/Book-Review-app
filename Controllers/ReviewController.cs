@@ -22,7 +22,7 @@ namespace BookReview.Controllers
         public async Task<IActionResult> GetReviews()
         {
             var reviews = await _reviewRepository.GetReviewsAsync();
-            var reviewsDto = reviews.Select(r => r.MapToDto()).ToList();
+            var reviewsDto = reviews.Select(r => ReviewMappers.MapToDto(r)).ToList();
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
@@ -43,7 +43,7 @@ namespace BookReview.Controllers
                 return NotFound();
 
             var review = await _reviewRepository.GetReviewAsync(id);
-            var reviewDto = review.MapToDto();
+            var reviewDto = ReviewMappers.MapToDto(review);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
@@ -60,7 +60,7 @@ namespace BookReview.Controllers
         public async Task<IActionResult> GetReviewsOfABook(int bookId)
         {
             var reviews = await _reviewRepository.GetReviewsOfABookAsync(bookId);
-            var reviewsDto = reviews.Select(r => r.MapToDto()).ToList();
+            var reviewsDto = reviews.Select(r => ReviewMappers.MapToDto(r)).ToList();
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
